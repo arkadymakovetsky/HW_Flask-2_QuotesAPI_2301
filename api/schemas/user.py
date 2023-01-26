@@ -5,7 +5,7 @@ from api.models.user import UserModel
 class UserSchema(ma.SQLAlchemyAutoSchema):
    class Meta:
        model = UserModel
-       exclude = ("password_hash",) # Исключить полея
+       exclude = ("password_hash",) # Исключить поля
 
 # одиночная
 user_schema = UserSchema()
