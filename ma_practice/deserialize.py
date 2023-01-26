@@ -1,3 +1,4 @@
+from pprint import pprint
 from learner import Learner
 from schema import LearnerSchema
 
@@ -10,7 +11,7 @@ json_data = """
 
 schema = LearnerSchema()
 result = schema.loads(json_data)
-print(result)
+pprint(result)
 
 
 json_data = """
@@ -35,4 +36,4 @@ json_data = """
 
 schemas = LearnerSchema(many=True)
 result = schemas.loads(json_data)
-print(result)
+pprint(result)

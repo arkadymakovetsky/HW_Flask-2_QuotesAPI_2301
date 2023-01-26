@@ -1,19 +1,46 @@
+from pprint import pprint
+from random import choice
 from learner import Learner
 from schema import LearnerSchema
 
-
-learner = Learner(name='Vlad', uid=10, olympic=True)
-leaner_schema = LearnerSchema()
-result = leaner_schema.dump(learner)
+# Один экземпляр
+learner = Learner(1, "Alex", True)
+learner_schema = LearnerSchema()
+result = learner_schema.dump(learner)
 print(result)
 
-
+# Список экземпляров
 learners = [
-    Learner(name='Vlad', uid=10, olympic=True), 
-    Learner(name='Arkady', uid=11, olympic=False), 
-    Learner(name='Max', uid=12, olympic=True)
+    Learner("1", "Alex", True),
+    Learner("2", "Ivan", False),
+    Learner("3", "Tom", True)
 ]
-learners_schema = LearnerSchema(many=True)
-result = learners_schema.dump(learners)
-print(result)
+schemas = LearnerSchema(many=True)
+res = schemas.dump(learners)
+pprint(res)
 
+
+# Реализация проверки типов через pattern matching
+print('==== CHECK ONE ====')
+data = choice([learners, learner])
+match type(data):
+    case s if s is Learner:
+        learner_schema = LearnerSchema()
+        result = learner_schema.dump(data)
+        print(result)
+    case s if s is list:
+        schemas = LearnerSchema(many=True)
+        res = schemas.dump(data)
+        pprint(res)
+
+print('==== CHECK TWO ====')
+data = choice([learners, learner])
+match data:
+    case Learner():
+        learner_schema = LearnerSchema()
+        result = learner_schema.dump(data)
+        print(result)
+    case list():
+        schemas = LearnerSchema(many=True)
+        res = schemas.dump(data)
+        pprint(res)
