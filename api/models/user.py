@@ -7,10 +7,12 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), unique=True)
     password_hash = db.Column(db.String(128))
+    role = db.Column(db.String(32), nullable=False, server_default="user", default="user")
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, role="user"):
         self.username = username
         self.hash_password(password)
+        self.role = role
 
     def hash_password(self, password):
         self.password_hash = pwd_context.encrypt(password)

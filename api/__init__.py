@@ -22,12 +22,18 @@ def verify_password(username, password):
     if not user or not user.verify_password(password):
         return False
     g.user = user
-    #print(f"{user=}")
     return True
 
 @token_auth.verify_token
 def verify_token(token):
    from api.models.user import UserModel
    user = UserModel.verify_auth_token(token)
-   #print(f"{user=}")
    return user
+
+@basic_auth.get_user_roles
+def get_user_roles(user):
+    return user.get_roles()
+
+@token_auth.get_user_roles
+def get_user_roles(user):
+    return user.get_roles()
